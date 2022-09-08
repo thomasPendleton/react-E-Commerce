@@ -6,7 +6,7 @@ import aboutImg from '../assets/hero-bcg.jpeg'
 const AboutPage = () => {
   return (
     <main>
-      <PageHero title='about' />
+      <PageHero title="about" />
       <Wrapper className="page section section-center">
         <img src={aboutImg} alt="nice desk" />
         <article>
@@ -18,7 +18,9 @@ const AboutPage = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis eum
             incidunt ratione nisi necessitatibus vitae ab laborum, quae delectus
             ipsum quod id velit molestiae aliquam! Libero exercitationem quia
-            delectus quis?
+            delectus quis? Lorem, ipsum dolor sit amet consectetur adipisicing
+            elit. Autem laborum obcaecati numquam expedita maiores suscipit
+            consectetur distinctio reprehenderit blanditiis fugit.
           </p>
         </article>
       </Wrapper>
