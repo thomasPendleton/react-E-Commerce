@@ -15,7 +15,75 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const SingleProductPage = () => {
-  return <h4>single product page</h4>
+  const { id } = useParams()
+  const history = useHistory()
+  const {
+    fetchSingleProduct,
+    single_product,
+    single_product_loading: loading,
+    single_product_error: error,
+  } = useProductsContext()
+  const {
+    name,
+    price,
+    id: sku,
+    description,
+    stock,
+    stars,
+    reviews,
+    company,
+    images,
+  } = single_product
+
+  useEffect(() => {
+    fetchSingleProduct(`${url}${id}`)
+  }, [id])
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        history.push("/")
+      }, 3000)
+    }
+  }, [error])
+
+  if (loading) {
+    return <Loading />
+  }
+
+  return (
+    <Wrapper>
+      <PageHero title={name} single_product />
+      <div className="section section-center page">
+        <Link to="/products" className="btn">
+          back to products
+        </Link>
+        <div className="product-center">
+          <ProductImages images={images}/>
+          <section className="content">
+            <h2>{name}</h2>
+            <Stars stars={stars} reviews={reviews}/>
+            <h5 className="price">{formatPrice(price)}</h5>
+            <p className="desc">{description}</p>
+            <p className="info">
+              <span>Available : </span>
+              {stock > 0 ? "In stock" : "out of stock"}
+            </p>
+            <p className="info">
+              <span>sku : </span>
+              {sku}
+            </p>
+            <p className="info">
+              <span>brand : </span>
+              {company}
+            </p>
+            <hr />
+            {stock > 0 && <AddToCart product={single_product}/>}
+          </section>
+        </div>
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.main`

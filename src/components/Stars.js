@@ -1,8 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs'
-const Stars = () => {
-  return <h4>stars</h4>
+const Stars = ({ stars, reviews }) => {
+  const getStars = Array.from({ length: 5 }, (_, index) => {
+    const number = index + 0.5
+    return (
+      <span key={index}>
+        {stars >= index + 1 ? (
+          <BsStarFill />
+        ) : stars >= number ? (
+          <BsStarHalf />
+        ) : (
+          <BsStar />
+        )}
+      </span>
+    )
+  })
+  return (
+    <Wrapper>
+      <div className="stars">{getStars}</div>
+      <div className="reviews">
+        <p>({reviews} reviews)</p>
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.div`
@@ -20,3 +41,5 @@ const Wrapper = styled.div`
   margin-bottom: 0.5rem;
 `
 export default Stars
+
+
