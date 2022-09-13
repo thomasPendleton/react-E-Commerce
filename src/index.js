@@ -11,7 +11,9 @@ import Product from "./components/Product"
 
 ReactDOM.render(
   <ProductsProvider>
-    <App />
+    <FilterProvider>
+      <App />
+    </FilterProvider>
   </ProductsProvider>,
   document.getElementById("root")
 )

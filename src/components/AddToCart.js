@@ -6,8 +6,58 @@ import { useCartContext } from '../context/cart_context'
 import AmountButtons from './AmountButtons'
 
 const AddToCart = ({product}) => {
-  console.log(product)
-  return <h4>addToCart </h4>
+const { id, stock, colors } = product
+
+const [mainColor, setMainColor] = useState(colors[0])
+const [amount, setAmount] = useState(1)
+
+const increase = () => {
+  setAmount((prev) => {
+    let tempAmount = prev + 1
+    if (tempAmount > stock) {
+      tempAmount = stock
+    }
+    return tempAmount
+  })
+}
+const decrease = () => {
+  setAmount((prev) => {
+    let tempAmount = prev - 1
+    if (tempAmount < 1) {
+      tempAmount = 1
+    }
+    return tempAmount
+  })
+}
+
+return (
+  <Wrapper>
+    <div className="colors">
+      <span>colors : </span>
+      <div>
+        {colors.map((color, idx) => {
+          return (
+            <button
+              className={mainColor === color ? "color-btn active" : "color-btn"}
+              style={{ background: color }}
+              key={idx}
+              onClick={() => setMainColor(color)}
+            >
+              {mainColor === color && <FaCheck />}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+
+    <div className="btn-container">
+      <AmountButtons amount={amount} decrease={decrease} increase={increase} />
+      <Link to="/cart" className="btn">
+        add to cart
+      </Link>
+    </div>
+  </Wrapper>
+)
 }
 
 const Wrapper = styled.section`
@@ -53,6 +103,7 @@ const Wrapper = styled.section`
   .btn {
     margin-top: 1rem;
     width: 140px;
+    text-align: center;
   }
 `
 export default AddToCart

@@ -59,8 +59,6 @@ export const ProductsProvider = ({ children }) => {
 
   useEffect(() => {
     fetchProducts(url)
-    
-    
   }, [])
 
   return (
@@ -71,7 +69,7 @@ export const ProductsProvider = ({ children }) => {
     </ProductsContext.Provider>
   )
 }
-// make sure use
+// make sure to use
 export const useProductsContext = () => {
   return useContext(ProductsContext)
 }

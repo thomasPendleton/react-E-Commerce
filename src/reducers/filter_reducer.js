@@ -10,7 +10,42 @@ import {
 } from '../actions'
 
 const filter_reducer = (state, action) => {
-  return state
+  if (action.type === LOAD_PRODUCTS) {
+    return {
+      ...state,
+      all_products: [...action.payload],
+      filtered_products: [...action.payload],
+    }
+  }
+
+  if (action.type === SET_GRIDVIEW) {
+    return { ...state, grid_view: true }
+  }
+  if (action.type === SET_LISTVIEW) {
+    return { ...state, grid_view: false }
+  }
+
+  if (action.type === UPDATE_SORT) {
+    return { ...state, sort: action.payload }
+  }
+
+  if (action.type === SORT_PRODUCTS) {
+    const {sort} = state
+    if(sort === 'price-lowest'){
+      
+    }
+    if(sort === 'price-highest'){
+      
+    }
+    if(sort === 'name-a'){
+      
+    }
+    if(sort === 'name-z'){
+      
+    }
+    return { ...state }
+  }
+ 
   throw new Error(`No Matching "${action.type}" - action type`)
 }
 
