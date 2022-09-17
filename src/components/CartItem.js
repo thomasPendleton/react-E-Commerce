@@ -9,8 +9,12 @@ import { useCartContext } from '../context/cart_context'
 const CartItem = ({ amount, color, id, image, max, name, price }) => {
   const { removeItem, toggleAmount } = useCartContext()
 
-  const increase = () => {}
-  const decrease = () => {}
+  const increase = () => {
+    toggleAmount(id, 'increase')
+  }
+  const decrease = () => {
+    toggleAmount(id, 'decrease')
+  }
 
   return (
     <Wrapper>
@@ -161,7 +165,7 @@ const Wrapper = styled.article`
       button {
         width: 1.5rem;
         height: 1rem;
-        font-size: 1rem;
+        /* font-size: 1rem; */
       }
       h2 {
         font-size: 1.5rem;
