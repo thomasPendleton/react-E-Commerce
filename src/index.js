@@ -14,18 +14,17 @@ ReactDOM.render(
     domain="dev - nadgrxlg.us.auth0.com"
     clientId="fksdubPfPg2NDq1HahmYag1TrIa92HlA"
     redirectUri={window.location.origin}
-    cacheLocation='localstorage'
+    cacheLocation="localstorage"
   >
     <UserProvider>
-      
+      <ProductsProvider>
+        <FilterProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </FilterProvider>
+      </ProductsProvider>
     </UserProvider>
-    <ProductsProvider>
-      <FilterProvider>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </FilterProvider>
-    </ProductsProvider>
   </Auth0Provider>,
   document.getElementById("root")
 )
