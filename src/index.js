@@ -11,7 +11,7 @@ import Product from "./components/Product"
 
 ReactDOM.render(
   <Auth0Provider
-    domain="dev - nadgrxlg.us.auth0.com"
+    domain="dev-nadgrxlg.us.auth0.com"
     clientId="fksdubPfPg2NDq1HahmYag1TrIa92HlA"
     redirectUri={window.location.origin}
     cacheLocation="localstorage"

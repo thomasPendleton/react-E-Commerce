@@ -34,9 +34,10 @@ function App() {
 
         <Route exact path="/products/:id" children={<SingleProductPage />} />
 
-        <Route exact path="/checkout">
+        <PrivateRoute exact path="/checkout">
           <CheckoutPage></CheckoutPage>
-        </Route>
+        </PrivateRoute>
+        
         <Route exact path="*">
           <ErrorPage></ErrorPage>
         </Route>
