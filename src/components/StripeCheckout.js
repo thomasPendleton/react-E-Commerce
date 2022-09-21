@@ -11,15 +11,14 @@ import axios from 'axios'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 
 const CheckoutForm = () => {
   const { cart, total_amount, shipping_fee, clearCart } = useCartContext()
   const { myUser } = useUserContext()
-  const history = useHistory()
-
+  const navigate = useNavigate()
   //Stripe content
   const [succeeded, setSucceeded] = useState(false)
   const [error, setError] = useState(null)
@@ -50,29 +49,63 @@ const CheckoutForm = () => {
 
   const createPaymentIntent = async () => {
     try {
-      const {data} = await axios.post(
-        '/.netlify/functions/create-payment-intent',
-        JSON.stringify({cart, shipping_fee, total_amount})
+      const { data } = await axios.post(
+        "/.netlify/functions/create-payment-intent",
+        JSON.stringify({ cart, shipping_fee, total_amount })
       )
       setClientSecret(data.clientSecret)
-      console.log(data.clientSecret)
     } catch (error) {
-      console.log(error.response);
+      console.log(error.response)
     }
   }
 
   useEffect(() => {
     createPaymentIntent()
-
     //eslint-disable-next-line
   }, [])
 
-  const handleChange = async (event) => {}
+  const handleChange = async (event) => {
+    setDisabled(event.empty)
+    setError(event.error ? event.error.message : "")
+  }
 
-  const handleSubmit = async (event) => {}
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setProcessing(true)
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+      },
+    })
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`)
+      setProcessing(false)
+    } else {
+      setError(null)
+      setProcessing(false)
+      setSucceeded(true)
+      setTimeout(() => {
+        clearCart()
+        navigate("/")
+      }, 3000)
+    }
+  }
 
   return (
     <div>
+      {succeeded ? (
+        <article>
+          <h4>Thank you</h4>
+          <h4>Your payment was successful!</h4>
+          <h5>Redirecting to home page</h5>
+        </article>
+      ) : (
+        <article>
+          <h4>Hello, {myUser && myUser.name}</h4>
+          <p>Your total is {formatPrice(total_amount)}</p>
+          <p>Test card Number: 4242 4242 4242 4242</p>
+        </article>
+      )}
       <form id="payment-form" onSubmit={handleSubmit}>
         <CardElement
           id="card-element"

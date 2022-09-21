@@ -7,7 +7,6 @@ const ProductImages = ({ images = [{ url: "" }] }) => {
   // if main.url === '' than set a loader image
 
   const [main, setMain] = useState(images[0])
-  console.log(main);
   return (
     <Wrapper>
       <img src={main.url} alt="product" className="main" />
