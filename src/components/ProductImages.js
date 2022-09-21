@@ -2,10 +2,15 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const ProductImages = ({ images = [{ url: "" }] }) => {
+
+  //Set a loading image for the first image. Alt is displayed for a brief second.
+  // if main.url === '' than set a loader image
+
   const [main, setMain] = useState(images[0])
+  console.log(main);
   return (
     <Wrapper>
-      <img src={main.url} alt="main" className="main" />
+      <img src={main.url} alt="product" className="main" />
       <div className="gallery">
         {images.map((image, index) => {
           return (
